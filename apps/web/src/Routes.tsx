@@ -1,5 +1,5 @@
+import LoginPage from "@/modules/auth/components/LoginPage";
 import { BrowserRouter, Route, Routes as RoutesRouter } from "react-router";
-import LoginPage from "./pages/auth/LoginPage";
 
 export default function Routes() {
   return (

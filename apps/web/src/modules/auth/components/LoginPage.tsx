@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 
 type LoginPageProps = {};
 export default function LoginPage({}: LoginPageProps) {
