@@ -13,7 +13,7 @@
   "packageManager": "yarn@4.6.0",
   "devDependencies": {
     "concurrently": "^8.2.0",
-    "shared-types": "workspace:^",
+    "shared": "workspace:^",
     "turbo": "^2.5.4"
   }
 }
