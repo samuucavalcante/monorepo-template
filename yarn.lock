@@ -3360,6 +3360,7 @@ __metadata:
   resolution: "barber@workspace:."
   dependencies:
     concurrently: "npm:^8.2.0"
+    shared-types: "workspace:^"
     turbo: "npm:^2.5.4"
   languageName: unknown
   linkType: soft
@@ -7738,6 +7739,12 @@ __metadata:
   checksum: 10c0/68733173026766fa0d9ecaeb07f0483f4c2dc70ca376b3b7c40b7cda909f94b0918f6c5ad5ce27a9160bdfb475efaa9d5e705a11d8eaae18f9835d20976028bc
   languageName: node
   linkType: hard
+
+"shared-types@workspace:^, shared-types@workspace:packages/shared-types":
+  version: 0.0.0-use.local
+  resolution: "shared-types@workspace:packages/shared-types"
+  languageName: unknown
+  linkType: soft
 
 "shebang-command@npm:^2.0.0":
   version: 2.0.0
