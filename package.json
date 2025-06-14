@@ -1,4 +1,18 @@
 {
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "turbo run start:dev --filter=api",
+    "dev:web": "turbo run dev --filter=web",
+    "dev": "concurrently \"yarn dev:api\" \"yarn dev:web\""
+  },
   "name": "barber",
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.6.0",
+  "devDependencies": {
+    "turbo": "^2.5.4",
+    "concurrently": "^8.2.0"
+  }
 }
