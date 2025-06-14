@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
+
 type LoginPageProps = {};
 export default function LoginPage({}: LoginPageProps) {
-  return <div>Login page</div>;
+  return <Button>Login page</Button>;
 }
