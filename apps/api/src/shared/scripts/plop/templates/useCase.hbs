@@ -1,0 +1,16 @@
+import { injectable } from "tsyringe"
+import type { {{pascalCase module_name}}{{pascalCase useCase_name}}Dto, {{pascalCase module_name}}{{pascalCase useCase_name}}Returns  } from "./{{camelCase module_name}}.{{camelCase useCase_name}}.dto"
+
+@injectable()
+export class {{pascalCase module_name}}{{pascalCase useCase_name}}UseCase {
+  constructor() {}
+
+  async execute(dto: {{pascalCase module_name}}{{pascalCase useCase_name}}Dto): Promise<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns> {
+    void this.validateParams(dto)
+    throw new Error("Not Implemented")
+  }
+
+   private validateParams(dto: {{pascalCase module_name}}{{pascalCase useCase_name}}Dto): void {
+    throw new Error("Not Implemented")
+  }
+}
