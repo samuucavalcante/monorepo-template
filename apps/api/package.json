@@ -5,15 +5,20 @@
     "plop": "cross-env NODE_OPTIONS='--import tsx' plop --plopfile=./src/shared/scripts/plop/index.ts"
   },
   "devDependencies": {
+    "@eslint/js": "^9.32.0",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "cross-env": "^7.0.3",
     "esbuild": "^0.25.6",
     "esbuild-register": "^3.6.0",
+    "eslint": "^9.32.0",
+    "globals": "^16.3.0",
+    "jiti": "^2.5.1",
     "plop": "^4.0.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.38.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
