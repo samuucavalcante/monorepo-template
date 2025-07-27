@@ -10,5 +10,6 @@ export default defineConfig([
     extends: ["js/recommended"],
     languageOptions: { globals: globals.node },
   },
+  // @ts-expect-error : {}
   tseslint.configs.recommended,
 ]);
