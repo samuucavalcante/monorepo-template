@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:api": "turbo run start:dev --filter=api",
+    "dev:api": "turbo run dev --filter=api",
     "dev:web": "turbo run dev --filter=web",
     "dev": "concurrently \"yarn dev:api\" \"yarn dev:web\""
   },
