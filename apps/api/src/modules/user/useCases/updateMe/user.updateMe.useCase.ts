@@ -26,8 +26,9 @@ export class UserUpdateMeUseCase {
 
     const updatedUser = await this.userRepository.update(dto.userId, dto.user);
 
-    const { password, ...userWithoutPassword } = updatedUser;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userWihtoutPassword } = updatedUser;
 
-    return { user: userWithoutPassword };
+    return { user: userWihtoutPassword };
   }
 }
