@@ -2627,7 +2627,12 @@ __metadata:
   resolution: "barber@workspace:."
   dependencies:
     concurrently: "npm:^8.2.0"
+    cross-env: "npm:^7.0.3"
+    esbuild: "npm:^0.25.6"
+    esbuild-register: "npm:^3.6.0"
+    plop: "npm:^4.0.1"
     shared: "npm:*"
+    tsx: "npm:^4.20.3"
     turbo: "npm:^2.5.4"
   languageName: unknown
   linkType: soft

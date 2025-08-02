@@ -38,7 +38,8 @@ export default function (plop: NodePlopAPI) {
         type: "add",
         path: path.resolve(
           __dirname,
-          "../../../modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.useCase.ts"
+          "../..",
+          "apps/api/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.useCase.ts"
         ),
         templateFile: path.resolve(__dirname, "./templates/useCase.hbs"),
         skipIfExists: true,
@@ -48,7 +49,8 @@ export default function (plop: NodePlopAPI) {
         type: "add",
         path: path.resolve(
           __dirname,
-          "../../../modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto.ts"
+          "../..",
+          "apps/api/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto.ts"
         ),
         templateFile: path.resolve(__dirname, "./templates/useCaseDto.hbs"),
         skipIfExists: true,
@@ -58,7 +60,8 @@ export default function (plop: NodePlopAPI) {
         type: "add",
         path: path.resolve(
           __dirname,
-          "../../../modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.controller.ts"
+          "../..",
+          "apps/api/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.controller.ts"
         ),
         templateFile: path.resolve(__dirname, "./templates/controller.hbs"),
       },
@@ -67,7 +70,8 @@ export default function (plop: NodePlopAPI) {
         type: "add",
         path: path.resolve(
           __dirname,
-          "../../../modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
+          "../..",
+          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
         ),
         templateFile: path.resolve(__dirname, "./templates/routes.hbs"),
         skipIfExists: true,
@@ -76,7 +80,8 @@ export default function (plop: NodePlopAPI) {
         type: "append",
         path: path.resolve(
           __dirname,
-          "../../../modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
+          "../..",
+          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
         ),
         pattern: "// plop-import",
         template: `import { {{pascalCase module_name}}{{pascalCase useCase_name}}Controller } from './useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.controller'`,
@@ -85,7 +90,8 @@ export default function (plop: NodePlopAPI) {
         type: "append",
         path: path.resolve(
           __dirname,
-          "../../../modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
+          "../..",
+          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
         ),
         pattern: "// plop-instance",
         template: `const {{camelCase module_name}}{{pascalCase useCase_name}}Controller = new {{pascalCase module_name}}{{pascalCase useCase_name}}Controller()`,
@@ -94,7 +100,8 @@ export default function (plop: NodePlopAPI) {
         type: "append",
         path: path.resolve(
           __dirname,
-          "../../../modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
+          "../..",
+          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
         ),
         pattern: "// plop-route",
         template: `{{camelCase module_name}}Router.{{lowerCase http_verb_name}}("/{{camelCase module_name}}/{{kebabCase controller_name}}", {{camelCase module_name}}{{pascalCase useCase_name}}Controller.handler);`,

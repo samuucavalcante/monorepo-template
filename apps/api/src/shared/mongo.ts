@@ -1,4 +1,5 @@
-require("dotenv").config();
+import "dotenv/config";
+
 import mongoose from "mongoose";
 
 initDB().catch((err) => console.log(err));
