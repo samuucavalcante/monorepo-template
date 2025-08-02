@@ -10,7 +10,9 @@
     "emitDeclarationOnly": false,
     "composite": true,
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"

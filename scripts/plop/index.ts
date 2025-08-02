@@ -1,5 +1,11 @@
-import { type NodePlopAPI } from "plop";
 import path from "path";
+import { type NodePlopAPI } from "plop";
+import { CreateUseCase } from "./services/CreateUseCase";
+
+const modulePath = path.resolve(__dirname, "..", "..", "apps/api/src/modules");
+const arcPath = path.resolve(__dirname, "..", "..", "packages/arc");
+
+const createUseCase = new CreateUseCase(modulePath, arcPath);
 
 export default function (plop: NodePlopAPI) {
   plop.setGenerator("useCase", {
@@ -34,23 +40,14 @@ export default function (plop: NodePlopAPI) {
     ],
     actions: [
       // UseCase
-      {
-        type: "add",
-        path: path.resolve(
-          __dirname,
-          "../..",
-          "apps/api/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.useCase.ts"
-        ),
-        templateFile: path.resolve(__dirname, "./templates/useCase.hbs"),
-        skipIfExists: true,
-      },
+      ...createUseCase.actions,
       // DTO
       {
         type: "add",
         path: path.resolve(
           __dirname,
           "../..",
-          "apps/api/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto.ts"
+          "packages/arc/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto.ts"
         ),
         templateFile: path.resolve(__dirname, "./templates/useCaseDto.hbs"),
         skipIfExists: true,
