@@ -8,21 +8,9 @@
     "build": "tsc -p tsconfig.json"
   },
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./entities": {
-      "import": "./dist/entities/index.js",
-      "types": "./dist/entities/index.d.ts"
-    },
-    "./useCases": {
-      "import": "./dist/useCases/index.js",
-      "types": "./dist/useCases/index.d.ts"
-    },
-    "./utils": {
-      "import": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
+    "./test/useCases": {
+      "import": "./dist/modules/test/useCases/index.js",
+      "types": "./dist/modules/test/useCases/index.d.ts"
     }
   }
 }
