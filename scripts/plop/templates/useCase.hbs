@@ -1,9 +1,13 @@
-import { injectable } from "tsyringe"
+import { injectable, inject } from "tsyringe"
+import  { {{pascalCase module_name}}Repository } from "@modules/{{camelCase module_name}}/repositories/{{camelCase module_name}}.repository"
 import type { {{pascalCase module_name}}{{pascalCase useCase_name}}Dto, {{pascalCase module_name}}{{pascalCase useCase_name}}Returns  } from "arc/{{camelCase module_name}}/useCases"
 
 @injectable()
 export class {{pascalCase module_name}}{{pascalCase useCase_name}}UseCase {
-  constructor() {}
+  constructor(
+    @inject({{pascalCase module_name}}Repository)
+    private readonly {{camelCase module_name}}Repository: {{pascalCase module_name}}Repository
+  ) {}
 
   async execute(dto: {{pascalCase module_name}}{{pascalCase useCase_name}}Dto): Promise<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns> {
     void this.validateParams(dto)
