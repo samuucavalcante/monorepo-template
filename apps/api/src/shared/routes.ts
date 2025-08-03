@@ -5,7 +5,9 @@ import { mongoose } from "@shared/mongo";
 
 const appRouter = Router();
 
-appRouter.use("/api", authRouter, userRouter);
+const routes = [authRouter, userRouter];
+
+appRouter.use("/api", routes);
 
 appRouter.get("/api/health", (_, res) => {
   res

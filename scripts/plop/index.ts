@@ -2,18 +2,29 @@ import path from "path";
 import { type NodePlopAPI } from "plop";
 import { CreateUseCase } from "./services/CreateUseCase";
 import { CreateController } from "./services/CreateController";
+import { CreateRouter } from "./services/CreateRouter";
+import { CreateInterface } from "./services/CreateInterface";
 
 const modulePath = path.resolve(__dirname, "..", "..", "apps/api/src/modules");
 const arcPath = path.resolve(__dirname, "..", "..", "packages/arc");
 
 const createUseCase = new CreateUseCase(modulePath, arcPath);
 const createController = new CreateController(modulePath, arcPath);
+const createRouter = new CreateRouter(modulePath, arcPath);
+const createInterface = new CreateInterface(arcPath);
 
 const actions = [
   // UseCase & DTO
   ...createUseCase.actions,
+
   // Controller
   ...createController.actions,
+
+  // Router
+  ...createRouter.actions,
+
+  // Interface
+  ...createInterface.actions,
 ];
 
 export default function (plop: NodePlopAPI) {
@@ -47,50 +58,6 @@ export default function (plop: NodePlopAPI) {
         filter: (input: string) => input.toUpperCase(),
       },
     ],
-    actions: [
-      // UseCase & DTO
-      ...actions,
-      // Routes file base (caso ainda não exista)
-      {
-        type: "add",
-        path: path.resolve(
-          __dirname,
-          "../..",
-          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
-        ),
-        templateFile: path.resolve(__dirname, "./templates/routes.hbs"),
-        skipIfExists: true,
-      },
-      {
-        type: "append",
-        path: path.resolve(
-          __dirname,
-          "../..",
-          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
-        ),
-        pattern: "// plop-import",
-        template: `import { {{pascalCase module_name}}{{pascalCase useCase_name}}Controller } from './useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.controller'`,
-      },
-      {
-        type: "append",
-        path: path.resolve(
-          __dirname,
-          "../..",
-          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
-        ),
-        pattern: "// plop-instance",
-        template: `const {{camelCase module_name}}{{pascalCase useCase_name}}Controller = new {{pascalCase module_name}}{{pascalCase useCase_name}}Controller()`,
-      },
-      {
-        type: "append",
-        path: path.resolve(
-          __dirname,
-          "../..",
-          "apps/api/src/modules/{{camelCase module_name}}/{{camelCase module_name}}.routes.ts"
-        ),
-        pattern: "// plop-route",
-        template: `{{camelCase module_name}}Router.{{lowerCase http_verb_name}}("/{{camelCase module_name}}/{{kebabCase controller_name}}", {{camelCase module_name}}{{pascalCase useCase_name}}Controller.handler);`,
-      },
-    ],
+    actions,
   });
 }

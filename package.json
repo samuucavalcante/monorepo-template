@@ -8,7 +8,7 @@
     "dev:api": "turbo run dev --filter=api",
     "dev:web": "turbo run dev --filter=web",
     "dev": "concurrently \"yarn dev:api\" \"yarn dev:web\"",
-    "plop": "cross-env NODE_OPTIONS='--import tsx' plop --plopfile=./scripts/plop/index.ts",
+    "plop": "cross-env NODE_OPTIONS='--import tsx' plop --plopfile=./scripts/plop/index.ts && yarn build:arc",
     "build:arc": "cd ./packages/arc && npm run build && cd ../.."
   },
   "name": "barber",

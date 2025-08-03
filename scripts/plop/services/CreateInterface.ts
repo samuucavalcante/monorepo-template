@@ -1,39 +1,36 @@
 import { ActionType } from "plop";
 import path from "path";
 
-export class CreateUseCase {
+export class CreateInterface {
   public actions: ActionType[] = [];
 
-  constructor(private moduleApiPath: string, private arcPath: string) {
+  constructor(private arcPath: string) {
     this.execute();
   }
 
   private execute() {
-    this.generateUseCase();
-    this.generateDTO();
+    this.generateInterface();
     this.modifyPackageJsonIfNecessary();
   }
 
-  private generateUseCase() {
-    this.actions.push({
-      type: "add",
-      path: path.join(
-        this.moduleApiPath,
-        "{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.useCase.ts"
-      ),
-      templateFile: path.resolve(__dirname, "..", "templates/useCase.hbs"),
-      skipIfExists: true,
-    });
-  }
-
-  private generateDTO() {
+  private generateInterface() {
     this.actions.push({
       type: "add",
       path: path.join(
         this.arcPath,
-        "src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto.ts"
+        "src/modules/{{camelCase module_name}}/interfaces/{{camelCase module_name}}.interface.ts"
       ),
-      templateFile: path.resolve(__dirname, "..", "templates/useCaseDto.hbs"),
+      templateFile: path.resolve(__dirname, "..", "templates/interface.hbs"),
+      skipIfExists: true,
+    });
+
+    this.actions.push({
+      type: "add",
+      path: path.join(
+        this.arcPath,
+        "src/modules/{{camelCase module_name}}/interfaces/index.ts"
+      ),
+      template: "export * from './{{camelCase module_name}}.interface'",
       skipIfExists: true,
     });
   }
@@ -46,10 +43,10 @@ export class CreateUseCase {
         const json = JSON.parse(fileContent);
         const moduleName = data.module_name;
 
-        const subpath = `./${moduleName}/useCases`;
+        const subpath = `./${moduleName}/interfaces`;
         const newExport = {
-          import: `./dist/modules/${moduleName}/useCases/index.js`,
-          types: `./dist/modules/${moduleName}/useCases/index.d.ts`,
+          import: `./dist/modules/${moduleName}/interfaces/index.js`,
+          types: `./dist/modules/${moduleName}/interfaces/index.d.ts`,
         };
 
         const existing = json.exports[subpath];

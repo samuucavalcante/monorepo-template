@@ -7,10 +7,5 @@
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
-  "exports": {
-    "./test/useCases": {
-      "import": "./dist/modules/test/useCases/index.js",
-      "types": "./dist/modules/test/useCases/index.d.ts"
-    }
-  }
+  "exports": {}
 }
