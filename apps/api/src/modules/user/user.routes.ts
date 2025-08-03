@@ -1,4 +1,4 @@
-import { Router, type Request } from "express";
+import { Router } from "express";
 
 // plop-import
 import { UserUpdateMeController } from "./useCases/updateMe/user.updateMe.controller";

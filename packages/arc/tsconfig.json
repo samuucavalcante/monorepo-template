@@ -8,7 +8,6 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
-    "composite": true,
     "esModuleInterop": true,
     "strict": true,
     "resolveJsonModule": true,

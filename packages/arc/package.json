@@ -7,5 +7,22 @@
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
-  "exports": {}
+  "exports": {
+    "./auth/useCases": {
+      "types": "./dist/modules/auth/useCases/index.d.ts",
+      "import": "./dist/modules/auth/useCases/index.js"
+    },
+    "./auth/interfaces": {
+      "types": "./dist/modules/auth/interfaces/index.d.ts",
+      "import": "./dist/modules/auth/interfaces/index.js"
+    },
+    "./user/useCases": {
+      "types": "./dist/modules/user/useCases/index.d.ts",
+      "import": "./dist/modules/user/useCases/index.js"
+    },
+    "./user/interfaces": {
+      "types": "./dist/modules/user/interfaces/index.d.ts",
+      "import": "./dist/modules/user/interfaces/index.js"
+    }
+  }
 }

@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
-import type { AuthRegisterDto, AuthRegisterReturns } from "./auth.register.dto";
-import { UserRepository } from "@modules/user/repository/user.repository";
+import { UserRepository } from "@modules/user/repositories/user.repository";
 import { AppError } from "@shared/error";
 import { AuthLoginUseCase } from "@modules/auth/useCases/login/auth.login.useCase";
 import argon2 from "argon2";
+import type { AuthRegisterDto, AuthRegisterReturns } from "arc/auth/useCases";
 
 @injectable()
 export class AuthRegisterUseCase {

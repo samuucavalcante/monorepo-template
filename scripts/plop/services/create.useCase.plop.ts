@@ -36,6 +36,26 @@ export class CreateUseCase {
       templateFile: path.resolve(__dirname, "..", "templates/useCaseDto.hbs"),
       skipIfExists: true,
     });
+
+    this.actions.push({
+      type: "add",
+      path: path.join(
+        this.arcPath,
+        "src/modules/{{camelCase module_name}}/useCases/index.ts"
+      ),
+      template: "// useCasesDTO",
+      skipIfExists: true,
+    });
+
+    this.actions.push({
+      type: "append",
+      path: path.join(
+        this.arcPath,
+        "src/modules/{{camelCase module_name}}/useCases/index.ts"
+      ),
+      pattern: "// useCasesDTO",
+      template: `export * from "./{{camelCase module_name}}/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto";`,
+    });
   }
 
   private modifyPackageJsonIfNecessary() {

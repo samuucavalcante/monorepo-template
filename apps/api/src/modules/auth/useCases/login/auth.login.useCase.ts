@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import type { AuthLoginDto, AuthLoginReturns } from "./auth.login.dto";
-import { UserRepository } from "@modules/user/repository/user.repository";
+import type { AuthLoginDto, AuthLoginReturns } from "arc/auth/useCases";
+import { UserRepository } from "@modules/user/repositories/user.repository";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { AppError } from "@shared/error";
@@ -21,7 +21,7 @@ export class AuthLoginUseCase {
 
     if (!passwordMatched) throw new AppError("Credencias inválidas", 400);
 
-    const { password, ...userWithoutPassword } = user;
+    const { password: _, ...userWithoutPassword } = user;
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_WEB_TOKEN!, {
       algorithm: "HS256",

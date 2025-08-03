@@ -24,7 +24,7 @@ export function ensureAuthenticatedMiddleware(
     req.userId = payload.userId;
 
     next();
-  } catch (err) {
+  } catch {
     throw new AppError("Token inválido ou expirado", 401);
   }
 }

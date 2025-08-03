@@ -1,5 +1,5 @@
-import type { User } from "@modules/user/interfaces/user";
-import { UserModel } from "@modules/user/repository/user.schema.repository";
+import { UserModel } from "@modules/user/repositories/user.schema.repository";
+import type { User } from "arc/user/interfaces";
 import { Types, type PipelineStage } from "mongoose";
 import { injectable } from "tsyringe";
 

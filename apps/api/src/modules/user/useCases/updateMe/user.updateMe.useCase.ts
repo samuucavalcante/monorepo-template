@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
-import type { UserUpdateMeDto, UserUpdateMeReturns } from "./user.updateMe.dto";
 import { UserRepository } from "@modules/user/repositories/user.repository";
 import { AppError } from "@shared/error";
+import type { UserUpdateMeDto, UserUpdateMeReturns } from "arc/user/useCases";
 
 @injectable()
 export class UserUpdateMeUseCase {
