@@ -1,11 +1,20 @@
 import path from "path";
 import { type NodePlopAPI } from "plop";
 import { CreateUseCase } from "./services/CreateUseCase";
+import { CreateController } from "./services/CreateController";
 
 const modulePath = path.resolve(__dirname, "..", "..", "apps/api/src/modules");
 const arcPath = path.resolve(__dirname, "..", "..", "packages/arc");
 
 const createUseCase = new CreateUseCase(modulePath, arcPath);
+const createController = new CreateController(modulePath, arcPath);
+
+const actions = [
+  // UseCase & DTO
+  ...createUseCase.actions,
+  // Controller
+  ...createController.actions,
+];
 
 export default function (plop: NodePlopAPI) {
   plop.setGenerator("useCase", {
@@ -40,17 +49,7 @@ export default function (plop: NodePlopAPI) {
     ],
     actions: [
       // UseCase & DTO
-      ...createUseCase.actions,
-      // Controller
-      {
-        type: "add",
-        path: path.resolve(
-          __dirname,
-          "../..",
-          "apps/api/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.controller.ts"
-        ),
-        templateFile: path.resolve(__dirname, "./templates/controller.hbs"),
-      },
+      ...actions,
       // Routes file base (caso ainda não exista)
       {
         type: "add",
