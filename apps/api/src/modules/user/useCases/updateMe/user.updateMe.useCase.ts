@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import type { UserUpdateMeDto, UserUpdateMeReturns } from "./user.updateMe.dto";
-import { UserRepository } from "@modules/user/repository/user.repository";
+import { UserRepository } from "@modules/user/repositories/user.repository";
 import { AppError } from "@shared/error";
 
 @injectable()
