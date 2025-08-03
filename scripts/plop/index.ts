@@ -1,9 +1,10 @@
 import path from "path";
 import { type NodePlopAPI } from "plop";
-import { CreateUseCase } from "./services/CreateUseCase";
-import { CreateController } from "./services/CreateController";
-import { CreateRouter } from "./services/CreateRouter";
-import { CreateInterface } from "./services/CreateInterface";
+
+import { CreateUseCase } from "./services/create.useCase.plop";
+import { CreateController } from "./services/create.controller.plop";
+import { CreateRouter } from "./services/create.router.plop";
+import { CreateInterface } from "./services/create.interface.plop";
 
 const modulePath = path.resolve(__dirname, "..", "..", "apps/api/src/modules");
 const arcPath = path.resolve(__dirname, "..", "..", "packages/arc");
