@@ -10,14 +10,30 @@ export class CreateUseCase {
 
   private execute() {
     this.generateUseCase();
+    this.generateDTO();
     this.modifyPackageJsonIfNecessary();
   }
 
   private generateUseCase() {
     this.actions.push({
       type: "add",
-      path: this.path,
-      templateFile: this.templateFile,
+      path: path.join(
+        this.moduleApiPath,
+        "{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.useCase.ts"
+      ),
+      templateFile: path.resolve(__dirname, "..", "templates/useCase.hbs"),
+      skipIfExists: true,
+    });
+  }
+
+  private generateDTO() {
+    this.actions.push({
+      type: "add",
+      path: path.join(
+        this.arcPath,
+        "{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto.ts"
+      ),
+      templateFile: path.resolve(__dirname, "..", "templates/useCaseDto.hbs"),
       skipIfExists: true,
     });
   }
@@ -43,16 +59,5 @@ export class CreateUseCase {
         return JSON.stringify(json, null, 2);
       },
     });
-  }
-
-  private get path(): string {
-    return path.join(
-      this.moduleApiPath,
-      "{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.useCase.ts"
-    );
-  }
-
-  private get templateFile(): string {
-    return path.resolve(__dirname, "..", "templates/useCase.hbs");
   }
 }

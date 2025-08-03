@@ -39,19 +39,8 @@ export default function (plop: NodePlopAPI) {
       },
     ],
     actions: [
-      // UseCase
+      // UseCase & DTO
       ...createUseCase.actions,
-      // DTO
-      {
-        type: "add",
-        path: path.resolve(
-          __dirname,
-          "../..",
-          "packages/arc/src/modules/{{camelCase module_name}}/useCases/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto.ts"
-        ),
-        templateFile: path.resolve(__dirname, "./templates/useCaseDto.hbs"),
-        skipIfExists: true,
-      },
       // Controller
       {
         type: "add",
