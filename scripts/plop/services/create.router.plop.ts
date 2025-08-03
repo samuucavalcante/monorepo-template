@@ -56,6 +56,7 @@ export class CreateRouter {
   }
 
   private generateAppendRouterIfNecessary() {
+    // TODO: this is no work
     this.actions.push({
       type: "append-if-not-exists",
       path: path.join(this.moduleApiPath, "..", "shared/routes.ts"),
