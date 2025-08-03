@@ -1,0 +1,27 @@
+import { injectable } from "tsyringe"
+import type { {{pascalCase module_name}} } from "arc/{{camelCase module_name}}/interfaces";
+import { {{pascalCase module_name}}Model } from "./{{camelCase module_name}}.schema.repository"
+
+@injectable()
+export class {{pascalCase module_name}}Repository {
+
+  async create(params: { {{camelCase module_name}}: Omit<{{pascalCase module_name}}, "id"> }): Promise<{{pascalCase module_name}}> {
+    const {{camelCase module_name}} = await {{pascalCase module_name}}Model.create(params)
+    return {{camelCase module_name}}
+  }
+
+  async update(params: { id: string, {{camelCase module_name}}: Partial<Omit<{{pascalCase module_name}}, "_id">> }): Promise<{{pascalCase module_name}} | null> {
+    const {{camelCase module_name}} = await {{pascalCase module_name}}Model.findOneAndUpdate({ _id: params.id }, params, { new: true })
+    return {{camelCase module_name}} || null
+  }
+
+  async readOne(params: { id: string }): Promise<{{pascalCase module_name}} | null> {
+    const {{camelCase module_name}} = await {{pascalCase module_name}}Model.findOne({ _id: params.id })
+    return {{camelCase module_name}} || null
+  }
+
+  async delete(params: { id: string }): Promise<{{pascalCase module_name}}> {
+    const {{camelCase module_name}} = await {{pascalCase module_name}}Model.updateOne({ _id: params.id }, { $set: { deletedAt: new Date() } })
+    return {{camelCase module_name}}
+  }
+}

@@ -5,6 +5,8 @@ import { CreateUseCase } from "./services/create.useCase.plop";
 import { CreateController } from "./services/create.controller.plop";
 import { CreateRouter } from "./services/create.router.plop";
 import { CreateInterface } from "./services/create.interface.plop";
+import { CreateRepository } from "./services/create.repository.plop";
+import { appendIfNotExists } from "./utils/appendIfNotExistsParams.plop";
 
 const modulePath = path.resolve(__dirname, "..", "..", "apps/api/src/modules");
 const arcPath = path.resolve(__dirname, "..", "..", "packages/arc");
@@ -13,6 +15,7 @@ const createUseCase = new CreateUseCase(modulePath, arcPath);
 const createController = new CreateController(modulePath, arcPath);
 const createRouter = new CreateRouter(modulePath, arcPath);
 const createInterface = new CreateInterface(arcPath);
+const createRepository = new CreateRepository(modulePath);
 
 const actions = [
   // UseCase & DTO
@@ -26,9 +29,13 @@ const actions = [
 
   // Interface
   ...createInterface.actions,
+
+  // Repository
+  ...createRepository.actions,
 ];
 
 export default function (plop: NodePlopAPI) {
+  plop.setActionType("append-if-not-exists", appendIfNotExists);
   plop.setGenerator("useCase", {
     description: "Cria um useCase",
     prompts: [

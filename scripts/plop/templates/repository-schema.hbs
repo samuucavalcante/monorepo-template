@@ -1,0 +1,17 @@
+import { model, Schema } from "mongoose";
+import type { {{pascalCase module_name}} } from "arc/{{camelCase module_name}}/interfaces";
+
+export const {{camelCase module_name}}Schema = new Schema(
+  {
+   
+    deletedAt: { type: Date, default: null },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const {{pascalCase module_name}}Model = model<{{pascalCase module_name}}>(
+  "{{camelCase module_name}}s",
+  {{camelCase module_name}}Schema
+);

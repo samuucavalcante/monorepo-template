@@ -10,6 +10,7 @@ export class CreateRouter {
 
   execute() {
     this.generateRouter();
+    this.generateAppendRouterIfNecessary();
   }
 
   private generateRouter() {
@@ -52,5 +53,20 @@ export class CreateRouter {
       pattern: "// plop-route",
       template: `{{camelCase module_name}}Router.{{lowerCase http_verb_name}}("/{{camelCase module_name}}/{{kebabCase controller_name}}", {{camelCase module_name}}{{pascalCase useCase_name}}Controller.handler);`,
     });
+  }
+
+  private generateAppendRouterIfNecessary() {
+    this.actions.push({
+      type: "append-if-not-exists",
+      path: path.join(this.moduleApiPath, "..", "shared/routes.ts"),
+      template: `import {{camelCase module_name}}Router from "@modules/{{camelCase module_name}}/{{camelCase module_name}}.routes";`,
+    } as unknown as ActionType);
+
+    this.actions.push({
+      type: "append-if-not-exists",
+      path: path.join(this.moduleApiPath, "..", "shared/routes.ts"),
+      pattern: "const routes = \\[.*",
+      template: `  {{camelCase module_name}}Router,`,
+    } as unknown as ActionType);
   }
 }
