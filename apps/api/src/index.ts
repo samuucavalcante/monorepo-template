@@ -7,10 +7,12 @@ import "./shared/mongo";
 import { errorsMiddleware } from "@shared/middlewares/errors.middleware";
 import { appRouter } from "./shared/routes";
 import morgan from "morgan";
+import { responseMiddleware } from "@shared/middlewares/response.middleware";
 
 const app = express();
 
 app.use(express.json());
+app.use(responseMiddleware);
 app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan("dev"));

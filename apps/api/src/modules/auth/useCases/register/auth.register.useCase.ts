@@ -17,7 +17,12 @@ export class AuthRegisterUseCase {
   async execute(dto: AuthRegisterDto): Promise<AuthRegisterReturns> {
     let user = await this.userRepository.findByEmail(dto.email);
 
-    if (user) throw new AppError("User already exists", 400);
+    if (user) {
+      throw new AppError({
+        message: "Email already exists",
+        messagePt: "Email já cadastrado",
+      });
+    }
 
     const passwordHash = await argon2.hash(dto.password);
 

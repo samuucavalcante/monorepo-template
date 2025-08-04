@@ -1,17 +1,27 @@
 import { AppError } from "@shared/error";
-import jwt from "jsonwebtoken";
-import type { NextFunction, Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
 
 export function errorsMiddleware(
-  err: AppError,
+  err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) {
-  console.error(err.message);
+  (res as unknown as { _hasError: boolean })._hasError = true;
 
-  res.status(err.code || 500).json({
+  if (err instanceof AppError) {
+    return res.status(err.params.code!).json({
+      success: false,
+      message: err.params.message,
+      messagePt: err.params.messagePt,
+    });
+  }
+
+  console.error(err);
+
+  return res.status(500).json({
     success: false,
-    message: err.message || "Internal Server Error",
+    message: "Internal server error",
+    messagePt: "Erro interno do servidor",
   });
 }

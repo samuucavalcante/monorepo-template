@@ -13,7 +13,12 @@ export class UserGetMeUseCase {
   async execute(dto: UserGetMeDto): Promise<UserGetMeReturns> {
     const user = await this.userRepository.findById(dto.userId);
 
-    if (!user) throw new AppError("Usuário não existe", 400);
+    if (!user) {
+      throw new AppError({
+        message: "User not found",
+        messagePt: "Usuário não encontrado",
+      });
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...userWithoutPassword } = user;

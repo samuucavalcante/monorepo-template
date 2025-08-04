@@ -15,11 +15,21 @@ export class AuthLoginUseCase {
   async execute(dto: AuthLoginDto): Promise<AuthLoginReturns> {
     const user = await this.userRepository.findByEmail(dto.email);
 
-    if (!user) throw new AppError("Credencias inválidas", 400);
+    if (!user) {
+      throw new AppError({
+        message: "Usuário ou senha inválidos",
+        messagePt: "Usuário ou senha inválidos",
+      });
+    }
 
     const passwordMatched = await argon2.verify(user.password, dto.password);
 
-    if (!passwordMatched) throw new AppError("Credencias inválidas", 400);
+    if (!passwordMatched) {
+      throw new AppError({
+        message: "Usuário ou senha inválidos",
+        messagePt: "Usuário ou senha inválidos",
+      });
+    }
 
     const { password: _, ...userWithoutPassword } = user;
 

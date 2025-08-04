@@ -13,7 +13,12 @@ export class UserUpdateMeUseCase {
   async execute(dto: UserUpdateMeDto): Promise<UserUpdateMeReturns> {
     const user = await this.userRepository.findById(dto.userId);
 
-    if (!user) throw new AppError("Usuário nao encontrado", 400);
+    if (!user) {
+      throw new AppError({
+        message: "User not found",
+        messagePt: "Usuário não encontrado",
+      });
+    }
 
     const isChangedEmail = dto.user.email && dto.user.email !== user.email;
 
@@ -21,7 +26,13 @@ export class UserUpdateMeUseCase {
       const userWithSameEmail = await this.userRepository.findByEmail(
         dto.user.email
       );
-      if (userWithSameEmail) throw new AppError("Email ja cadastrado", 400);
+
+      if (userWithSameEmail) {
+        throw new AppError({
+          message: "Email already exists",
+          messagePt: "Email já cadastrado",
+        });
+      }
     }
 
     const updatedUser = await this.userRepository.update(dto.userId, dto.user);
