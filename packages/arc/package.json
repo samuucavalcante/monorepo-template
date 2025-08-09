@@ -8,25 +8,25 @@
     "build": "tsc -p tsconfig.json"
   },
   "exports": {
+    "./shared": {
+      "types": "./dist/shared/index.d.ts",
+      "import": "./dist/shared/index.js"
+    },
     "./auth/useCases": {
       "types": "./dist/modules/auth/useCases/index.d.ts",
       "import": "./dist/modules/auth/useCases/index.js"
     },
-    "./auth/interfaces": {
-      "types": "./dist/modules/auth/interfaces/index.d.ts",
-      "import": "./dist/modules/auth/interfaces/index.js"
+    "./auth/entities": {
+      "types": "./dist/modules/auth/entities/index.d.ts",
+      "import": "./dist/modules/auth/entities/index.js"
     },
     "./user/useCases": {
       "types": "./dist/modules/user/useCases/index.d.ts",
       "import": "./dist/modules/user/useCases/index.js"
     },
-    "./user/interfaces": {
-      "types": "./dist/modules/user/interfaces/index.d.ts",
-      "import": "./dist/modules/user/interfaces/index.js"
-    },
-    "./shared": {
-      "types": "./dist/shared/index.d.ts",
-      "import": "./dist/shared/index.js"
+    "./user/entities": {
+      "types": "./dist/modules/user/entities/index.d.ts",
+      "import": "./dist/modules/user/entities/index.js"
     }
   }
 }

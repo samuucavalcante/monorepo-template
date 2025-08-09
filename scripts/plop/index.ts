@@ -4,7 +4,7 @@ import { type NodePlopAPI } from "plop";
 import { CreateUseCase } from "./services/create.useCase.plop";
 import { CreateController } from "./services/create.controller.plop";
 import { CreateRouter } from "./services/create.router.plop";
-import { CreateInterface } from "./services/create.interface.plop";
+import { CreateEntity } from "./services/create.entity.plop";
 import { CreateRepository } from "./services/create.repository.plop";
 import { appendIfNotExists } from "./utils/appendIfNotExistsParams.plop";
 
@@ -14,7 +14,7 @@ const arcPath = path.resolve(__dirname, "..", "..", "packages/arc");
 const createUseCase = new CreateUseCase(modulePath, arcPath);
 const createController = new CreateController(modulePath, arcPath);
 const createRouter = new CreateRouter(modulePath, arcPath);
-const createInterface = new CreateInterface(arcPath);
+const createEntity = new CreateEntity(arcPath);
 const createRepository = new CreateRepository(modulePath);
 
 const actions = [
@@ -28,7 +28,7 @@ const actions = [
   ...createRouter.actions,
 
   // Interface
-  ...createInterface.actions,
+  ...createEntity.actions,
 
   // Repository
   ...createRepository.actions,

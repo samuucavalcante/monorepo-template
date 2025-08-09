@@ -1,4 +1,4 @@
-import { User } from "@/modules/user/interfaces";
+import { User } from "@/modules/user/entities";
 
 export interface UserGetMeDto {
   userId: string;

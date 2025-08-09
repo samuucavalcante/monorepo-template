@@ -1,7 +1,7 @@
 import { ActionType } from "plop";
 import path from "path";
 
-export class CreateInterface {
+export class CreateEntity {
   public actions: ActionType[] = [];
 
   constructor(private arcPath: string) {
@@ -9,18 +9,18 @@ export class CreateInterface {
   }
 
   private execute() {
-    this.generateInterface();
+    this.generateEntity();
     this.modifyPackageJsonIfNecessary();
   }
 
-  private generateInterface() {
+  private generateEntity() {
     this.actions.push({
       type: "add",
       path: path.join(
         this.arcPath,
-        "src/modules/{{camelCase module_name}}/interfaces/{{camelCase module_name}}.interface.ts"
+        "src/modules/{{camelCase module_name}}/entities/{{camelCase module_name}}.entity.ts"
       ),
-      templateFile: path.resolve(__dirname, "..", "templates/interface.hbs"),
+      templateFile: path.resolve(__dirname, "..", "templates/entity.hbs"),
       skipIfExists: true,
     });
 
@@ -28,9 +28,9 @@ export class CreateInterface {
       type: "add",
       path: path.join(
         this.arcPath,
-        "src/modules/{{camelCase module_name}}/interfaces/index.ts"
+        "src/modules/{{camelCase module_name}}/entities/index.ts"
       ),
-      template: "export * from './{{camelCase module_name}}.interface'",
+      template: "export * from './{{camelCase module_name}}.entity'",
       skipIfExists: true,
     });
   }
@@ -43,10 +43,10 @@ export class CreateInterface {
         const json = JSON.parse(fileContent);
         const moduleName = data.module_name;
 
-        const subpath = `./${moduleName}/interfaces`;
+        const subpath = `./${moduleName}/entities`;
         const newExport = {
-          import: `./dist/modules/${moduleName}/interfaces/index.js`,
-          types: `./dist/modules/${moduleName}/interfaces/index.d.ts`,
+          import: `./dist/modules/${moduleName}/entities/index.js`,
+          types: `./dist/modules/${moduleName}/entities/index.d.ts`,
         };
 
         const existing = json.exports[subpath];

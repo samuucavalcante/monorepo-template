@@ -1,5 +1,8 @@
 import { injectable } from "tsyringe"
-import type { {{pascalCase module_name}} } from "arc/{{camelCase module_name}}/interfaces";
+import type { IReadListDTO } from "arc/shared";
+import { aggregationBuildPagination, aggregationBuildCount } from "@shared/utils/mongo.utils";
+
+import type { {{pascalCase module_name}} } from "arc/{{camelCase module_name}}/entities";
 import { {{pascalCase module_name}}Model } from "./{{camelCase module_name}}.schema.repository"
 
 @injectable()
@@ -23,5 +26,24 @@ export class {{pascalCase module_name}}Repository {
   async delete(params: { id: string }): Promise<{{pascalCase module_name}}> {
     const {{camelCase module_name}} = await {{pascalCase module_name}}Model.updateOne({ _id: params.id }, { $set: { deletedAt: new Date() } })
     return {{camelCase module_name}}
+  }
+
+  async readList(params: IReadListDTO): Promise<{{pascalCase module_name}}[]> {
+    const pipeline = []
+
+    pipeline.push(...aggregationBuildPagination(params));
+
+    return await {{pascalCase module_name}}Model.aggregate<{{pascalCase module_name}}>(pipeline)
+  }
+
+  async count(params: IReadListDTO): Promise<number> {
+    const pipeline = []
+
+    pipeline.push(...aggregationBuildPagination(params));
+    pipeline.push(...aggregationBuildCount());
+
+    const [result] = await {{pascalCase module_name}}Model.aggregate(pipeline);
+
+    return result.count || 0
   }
 }

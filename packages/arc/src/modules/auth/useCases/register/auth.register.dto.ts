@@ -1,4 +1,4 @@
-import { User } from "@/modules/user/interfaces/user.interface";
+import { User } from "@/modules/user/entities";
 
 export interface AuthRegisterDto {
   email: string;

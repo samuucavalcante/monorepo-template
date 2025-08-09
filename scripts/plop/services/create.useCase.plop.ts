@@ -54,7 +54,7 @@ export class CreateUseCase {
         "src/modules/{{camelCase module_name}}/useCases/index.ts"
       ),
       pattern: "// useCasesDTO",
-      template: `export * from "./{{camelCase module_name}}/{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto";`,
+      template: `export * from "./{{camelCase useCase_name}}/{{camelCase module_name}}.{{camelCase useCase_name}}.dto";`,
     });
   }
 

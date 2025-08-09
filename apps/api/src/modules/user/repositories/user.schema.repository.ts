@@ -1,4 +1,4 @@
-import type { User } from "arc/user/interfaces";
+import type { User } from "arc/user/entities";
 import { model, Schema } from "mongoose";
 
 export const userSchema = new Schema<User>(

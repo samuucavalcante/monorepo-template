@@ -1,5 +1,7 @@
 import { UserModel } from "@modules/user/repositories/user.schema.repository";
-import type { User } from "arc/user/interfaces";
+import { aggregationBuildPagination } from "@shared/utils/mongo.utils";
+import type { IReadListDTO } from "arc/shared";
+import type { User } from "arc/user/entities";
 import { Types, type PipelineStage } from "mongoose";
 import { injectable } from "tsyringe";
 
@@ -39,5 +41,13 @@ export class UserRepository {
     });
 
     return result!.toJSON() as User;
+  }
+
+  async paginate(params: IReadListDTO): Promise<User[]> {
+    const pipeline: PipelineStage[] = [];
+
+    pipeline.push(...aggregationBuildPagination(params));
+
+    return await UserModel.aggregate<User>(pipeline);
   }
 }
