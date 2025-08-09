@@ -1,9 +1,25 @@
 "use server";
+import { requester } from "@/shared/utils/requester";
+import { ResponseApi } from "arc/shared";
+
 import type { {{pascalCase module_name}}{{pascalCase useCase_name}}Dto, {{pascalCase module_name}}{{pascalCase useCase_name}}Returns  } from "arc/{{camelCase module_name}}/useCases"
 
-export async function {{camelCase module_name}}{{pascalCase useCase_name}}(params: {{pascalCase module_name}}{{pascalCase useCase_name}}Dto): Promise<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns> {
+
+export async function {{camelCase module_name}}{{pascalCase useCase_name}}(params: {{pascalCase module_name}}{{pascalCase useCase_name}}Dto): Promise<ResponseApi<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns>> {
   try {
-    
+    const response = await requester.post<ResponseApi<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns>>(
+      "/{{camelCase module_name}}/{{camelCase useCase_name}}",
+      {
+        body: params,
+      }
+    );
+
+    const dataResponse =
+      (await response.json()) as ResponseApi<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns>;
+
+    return dataResponse
+  } catch (error) {
+    return error as ResponseApi<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns>;
   }
 }
 
