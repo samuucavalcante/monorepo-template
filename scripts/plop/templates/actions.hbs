@@ -8,7 +8,7 @@ import type { {{pascalCase module_name}}{{pascalCase useCase_name}}Dto, {{pascal
 export async function {{camelCase module_name}}{{pascalCase useCase_name}}(params: {{pascalCase module_name}}{{pascalCase useCase_name}}Dto): Promise<ResponseApi<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns>> {
   try {
     const response = await requester.post<ResponseApi<{{pascalCase module_name}}{{pascalCase useCase_name}}Returns>>(
-      "/{{camelCase module_name}}/{{camelCase useCase_name}}",
+      "/{{camelCase module_name}}/{{kebabCase controller_name}}",
       {
         body: params,
       }

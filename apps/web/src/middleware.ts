@@ -7,12 +7,13 @@ export function middleware(request: NextRequest) {
 
   if (isPublicRoute) return NextResponse.next();
 
-  const token = request.cookies.get("token")?.value;
+  // const token = request.cookies.get("token")?.value;
+  // const user = request.cookies.get("user")?.value;
 
-  if (!token) {
-    const loginUrl = new URL("/login", request.url);
-    return NextResponse.redirect(loginUrl);
-  }
+  // if (!token || !user) {
+  //   const loginUrl = new URL("/login", request.url);
+  //   return NextResponse.redirect(loginUrl);
+  // }
 
   return NextResponse.next();
 }
