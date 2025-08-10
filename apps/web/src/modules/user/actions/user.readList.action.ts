@@ -18,7 +18,6 @@ export async function userReadList(
     const dataResponse =
       (await response.json()) as ResponseApi<UserReadListReturns>;
 
-    console.log(dataResponse);
     return dataResponse;
   } catch (error) {
     return error as ResponseApi<UserReadListReturns>;

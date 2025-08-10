@@ -1,12 +1,21 @@
+"use client";
 import { userReadList } from "@/modules/user/actions/user.readList.action";
 import { TableApp } from "@/shared/components/table-app";
 
-export default async function UserTable() {
+export default function UserTable() {
   return (
     <>
       <TableApp
+        filters={[
+          {
+            queryKey: "query",
+            label: "Pesquisar",
+            type: "search",
+            placeholder: "Buscar por nome ou email",
+          },
+        ]}
         fetchAction={userReadList}
-        pageSize={10}
+        pageSize={5}
         columns={[
           {
             header: "ID",
@@ -19,6 +28,11 @@ export default async function UserTable() {
           {
             header: "Email",
             accessorKey: "email",
+          },
+          {
+            header: "Criado em",
+            accessorKey: "createdAt",
+            cell: (info) => new Date(info.getValue<string>()).toLocaleString(),
           },
         ]}
       />
