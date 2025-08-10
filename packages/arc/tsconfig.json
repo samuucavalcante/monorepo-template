@@ -13,10 +13,10 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
+      "arc/*": [
+        "../arc/src/*"
+      ],
+    },
   },
   "include": [
     "src"

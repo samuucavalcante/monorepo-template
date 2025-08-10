@@ -1,4 +1,4 @@
-import { User } from "@/modules/user/entities";
+import { User } from "arc/modules/user/entities";
 
 export interface AuthRegisterDto {
   email: string;

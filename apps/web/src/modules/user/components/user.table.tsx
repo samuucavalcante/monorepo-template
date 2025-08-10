@@ -1,30 +1,16 @@
+import { userReadList } from "@/modules/user/actions/user.readList.action";
 import { TableApp } from "@/shared/components/table-app";
 
-export default function UserTable() {
+export default async function UserTable() {
   return (
     <>
       <TableApp
-        data={[
-          {
-            id: "1",
-            name: "João",
-            email: "5tT8o@example.com",
-          },
-          {
-            id: "2",
-            name: "Maria",
-            email: "5tT8o@example.com",
-          },
-          {
-            id: "3",
-            name: "Pedro",
-            email: "5tT8o@example.com",
-          },
-        ]}
+        fetchAction={userReadList}
+        pageSize={10}
         columns={[
           {
             header: "ID",
-            accessorKey: "id",
+            accessorKey: "_id",
           },
           {
             header: "Name",
