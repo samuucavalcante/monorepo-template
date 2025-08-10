@@ -1,6 +1,10 @@
 import { injectable } from "tsyringe"
 import type { IReadListDTO } from "arc/shared";
-import { aggregationBuildPagination, aggregationBuildCount } from "@shared/utils/mongo.utils";
+import {
+  aggregationBuildCount,
+  aggregationBuildPagination,
+  aggregationBuildSortPipeline,
+} from "@shared/utils/mongo.utils";
 
 import type { {{pascalCase module_name}} } from "arc/{{camelCase module_name}}/entities";
 import { {{pascalCase module_name}}Model } from "./{{camelCase module_name}}.schema.repository"
@@ -32,6 +36,7 @@ export class {{pascalCase module_name}}Repository {
     const pipeline = []
 
     pipeline.push(...aggregationBuildPagination(params));
+    pipeline.push(...aggregationBuildSortPipeline(params));
 
     return await {{pascalCase module_name}}Model.aggregate<{{pascalCase module_name}}>(pipeline)
   }

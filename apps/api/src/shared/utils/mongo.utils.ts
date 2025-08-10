@@ -1,4 +1,4 @@
-import type { IReadListDTO } from "arc/shared";
+import type { IReadListDTO, ISortOptions } from "arc/shared";
 
 export function aggregationBuildPagination(params: IReadListDTO) {
   const { page, regsPerPage } = params;
@@ -13,4 +13,13 @@ export function aggregationBuildPagination(params: IReadListDTO) {
 
 export function aggregationBuildCount() {
   return [{ $count: "count" }];
+}
+
+export function aggregationBuildSortPipeline({
+  orderBy = "_id",
+  sort = "asc",
+}: ISortOptions) {
+  const sortDirection: 1 | -1 = sort === "asc" ? 1 : -1;
+
+  return [{ $sort: { [orderBy]: sortDirection } }];
 }

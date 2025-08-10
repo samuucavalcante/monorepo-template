@@ -2,6 +2,7 @@ import { UserModel } from "@modules/user/repositories/user.schema.repository";
 import {
   aggregationBuildCount,
   aggregationBuildPagination,
+  aggregationBuildSortPipeline,
 } from "@shared/utils/mongo.utils";
 import type { User } from "arc/user/entities";
 import type { UserReadListDto } from "arc/user/useCases";
@@ -50,6 +51,7 @@ export class UserRepository {
     const pipeline: PipelineStage[] = [];
 
     pipeline.push(...aggregationBuilderFilter(params));
+    pipeline.push(...aggregationBuildSortPipeline(params));
     pipeline.push(...aggregationBuildPagination(params));
 
     return await UserModel.aggregate<User>(pipeline);

@@ -1,11 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   type ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  type SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -35,21 +37,18 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
-
-import { ResponseApi } from "arc/shared";
+import { cn } from "@/shared/lib/utils";
 import TableAppFilter, {
   IFilterTable,
 } from "@/shared/components/table-app/filters/table-app-filters";
+import { ISortOptions, ResponseApi } from "arc/shared";
+import { handleResponse } from "@/shared/utils/response";
 
-// Mock handleResponse function
-const handleResponse = async <T,>(options: {
-  fetch: Promise<ResponseApi<T>>;
-  dataFallback: T;
-}): Promise<T> => {
-  const result = await options.fetch;
-  return result.data || options.dataFallback;
-};
+type FilterItem = { key: string; value: string };
 
 interface TableAppProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -60,6 +59,7 @@ interface TableAppProps<TData, TValue> {
     params: any
   ) => Promise<ResponseApi<{ list: TData[]; count: number }>>;
   pageSize?: number;
+  enableSorting?: boolean;
 }
 
 export function TableApp<TData, TValue>({
@@ -68,24 +68,59 @@ export function TableApp<TData, TValue>({
   filters = [],
   pageSize = 10,
   title,
+  enableSorting = true,
 }: TableAppProps<TData, TValue>) {
   const [data, setData] = useState<TData[]>([]);
   const [pageCount, setPageCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
+  const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize,
   });
 
+  const [activeFilters, setActiveFilters] = useState<FilterItem[]>([]);
+
+  const onFilterChange = (key: string, value: string) => {
+    setActiveFilters((prev) => {
+      const existingIndex = prev.findIndex((f) => f.key === key);
+      if (existingIndex >= 0) {
+        const newFilters = [...prev];
+        newFilters[existingIndex] = { key, value };
+        return newFilters;
+      }
+      return [...prev, { key, value }];
+    });
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  };
+
+  const filtersObj = useMemo(() => {
+    return activeFilters.reduce((acc, curr) => {
+      acc[curr.key] = curr.value;
+      return acc;
+    }, {} as Record<string, string>);
+  }, [activeFilters]);
+
   const fetchData = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (params?: any) => {
       setLoading(true);
+
+      // Prepare sorting parameters
+      const sortParams: Partial<ISortOptions> = {};
+      if (sorting.length > 0) {
+        const firstSort = sorting[0];
+        sortParams.orderBy = firstSort.id;
+        sortParams.sort = firstSort.desc ? "desc" : "asc";
+      }
+
       handleResponse({
         fetch: fetchAction({
           page: pagination.pageIndex + 1,
           regsPerPage: pagination.pageSize,
+          ...sortParams,
+          ...filtersObj,
           ...params,
         }),
         dataFallback: { list: [], count: 0 },
@@ -96,7 +131,13 @@ export function TableApp<TData, TValue>({
         setCount(res.count);
       });
     },
-    [fetchAction, pagination.pageIndex, pagination.pageSize]
+    [
+      fetchAction,
+      filtersObj,
+      pagination.pageIndex,
+      pagination.pageSize,
+      sorting,
+    ]
   );
 
   useEffect(() => {
@@ -107,10 +148,17 @@ export function TableApp<TData, TValue>({
     data,
     columns,
     pageCount,
-    state: { pagination },
+    state: {
+      pagination,
+      sorting,
+    },
     onPaginationChange: setPagination,
+    onSortingChange: setSorting,
     manualPagination: true,
+    manualSorting: enableSorting,
+    enableSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   // Generate page numbers for pagination
@@ -167,27 +215,63 @@ export function TableApp<TData, TValue>({
     }));
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getSortIcon = (column: any) => {
+    const sortDirection = column.getIsSorted();
+
+    if (!sortDirection) {
+      return <ArrowUpDown className="ml-2 h-4 w-4" />;
+    }
+
+    return sortDirection === "desc" ? (
+      <ArrowDown className="ml-2 h-4 w-4" />
+    ) : (
+      <ArrowUp className="ml-2 h-4 w-4" />
+    );
+  };
+
   return (
     <div className="space-y-4">
       <div>{title && <h1 className="text-2xl font-bold">{title}</h1>}</div>
 
       <div className="flex justify-end items-center">
         <TableAppFilter
-          onChange={(key, value) => fetchData({ [key]: value })}
+          onChange={(key, value) => onFilterChange(key, value)}
           filters={filters}
         />
       </div>
 
-      <div className="overflow-hidden rounded-md border">
+      <div className="relative overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
+                    {header.isPlaceholder ? null : (
+                      <div
+                        className={cn(
+                          "flex items-center",
+                          header.column.getCanSort() && enableSorting
+                            ? "cursor-pointer select-none hover:bg-accent hover:text-accent-foreground rounded-md px-2 py-1 -mx-2 -my-1"
+                            : ""
+                        )}
+                        onClick={
+                          header.column.getCanSort() && enableSorting
+                            ? header.column.getToggleSortingHandler()
+                            : undefined
+                        }
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                        {header.column.getCanSort() && enableSorting && (
+                          <span className="ml-2">
+                            {getSortIcon(header.column)}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </TableHead>
                 ))}
@@ -195,19 +279,7 @@ export function TableApp<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {loading ? (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
-                    <span>Carregando...</span>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ) : table.getRowModel().rows.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
@@ -232,6 +304,12 @@ export function TableApp<TData, TValue>({
             )}
           </TableBody>
         </Table>
+
+        {loading && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/70 bg-opacity-30">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          </div>
+        )}
       </div>
 
       {/* Pagination Section */}
