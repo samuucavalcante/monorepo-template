@@ -1,4 +1,5 @@
 import { tableFiltersComponents } from "@/shared/components/table-app/filters/constants";
+import { Filter } from "lucide-react";
 
 export type IFilterTable<T = unknown> = {
   type: "search";
@@ -15,15 +16,22 @@ export default function TableAppFilter<T>({
   filters,
   onChange,
 }: TableAppFilterProps<T>) {
-  return filters.map((filter) => {
-    const Component = tableFiltersComponents[filter.type];
+  return (
+    <>
+      <div className="flex items-center space-x-1 mr-2">
+        <Filter className="size-4" />
+      </div>
+      {filters.map((filter) => {
+        const Component = tableFiltersComponents[filter.type];
 
-    return (
-      <Component
-        key={filter.label}
-        onChange={onChange}
-        filter={filter as IFilterTable}
-      />
-    );
-  });
+        return (
+          <Component
+            key={filter.label}
+            onChange={onChange}
+            filter={filter as IFilterTable}
+          />
+        );
+      })}
+    </>
+  );
 }

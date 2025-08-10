@@ -6,16 +6,16 @@ export default function UserTable() {
   return (
     <>
       <TableApp
+        title="Usuários"
         filters={[
           {
             queryKey: "query",
-            label: "Pesquisar",
+            label: "Filtro",
             type: "search",
             placeholder: "Buscar por nome ou email",
           },
         ]}
         fetchAction={userReadList}
-        pageSize={5}
         columns={[
           {
             header: "ID",

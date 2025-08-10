@@ -53,6 +53,7 @@ const handleResponse = async <T,>(options: {
 
 interface TableAppProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
+  title?: string;
   filters?: IFilterTable<TData>[];
   fetchAction: (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,6 +67,7 @@ export function TableApp<TData, TValue>({
   fetchAction,
   filters = [],
   pageSize = 10,
+  title,
 }: TableAppProps<TData, TValue>) {
   const [data, setData] = useState<TData[]>([]);
   const [pageCount, setPageCount] = useState(0);
@@ -167,10 +169,14 @@ export function TableApp<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <TableAppFilter
-        onChange={(key, value) => fetchData({ [key]: value })}
-        filters={filters}
-      />
+      <div>{title && <h1 className="text-2xl font-bold">{title}</h1>}</div>
+
+      <div className="flex justify-end items-center">
+        <TableAppFilter
+          onChange={(key, value) => fetchData({ [key]: value })}
+          filters={filters}
+        />
+      </div>
 
       <div className="overflow-hidden rounded-md border">
         <Table>

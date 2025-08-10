@@ -39,11 +39,10 @@ export class {{pascalCase module_name}}Repository {
   async count(params: IReadListDTO): Promise<number> {
     const pipeline = []
 
-    pipeline.push(...aggregationBuildPagination(params));
     pipeline.push(...aggregationBuildCount());
 
     const [result] = await {{pascalCase module_name}}Model.aggregate(pipeline);
 
-    return result.count || 0
+    return result?.count || 0
   }
 }

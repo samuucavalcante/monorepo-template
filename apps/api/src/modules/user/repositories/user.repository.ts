@@ -63,7 +63,7 @@ export class UserRepository {
 
     const [result] = await UserModel.aggregate(pipeline);
 
-    return result.count || 0;
+    return result?.count || 0;
   }
 }
 
