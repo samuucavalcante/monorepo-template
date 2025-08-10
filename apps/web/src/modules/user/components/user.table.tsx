@@ -1,6 +1,7 @@
 "use client";
 import { userReadList } from "@/modules/user/actions/user.readList.action";
-import { TableApp } from "@/shared/components/table-app";
+import { TableApp, TableMetaInternal } from "@/shared/components/table-app";
+import { Button } from "@/shared/components/ui/button";
 
 export default function UserTable() {
   return (
@@ -33,6 +34,17 @@ export default function UserTable() {
             header: "Criado em",
             accessorKey: "createdAt",
             cell: (info) => new Date(info.getValue<string>()).toLocaleString(),
+          },
+
+          {
+            header: "Ação",
+            accessorKey: "action",
+            cell: (info) => {
+              const onRefetch = (info.table.options.meta as TableMetaInternal)
+                .onRefetch;
+
+              return <Button onClick={() => onRefetch?.()}>Atualizar</Button>;
+            },
           },
         ]}
       />

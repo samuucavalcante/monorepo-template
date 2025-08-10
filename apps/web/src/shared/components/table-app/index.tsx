@@ -8,6 +8,7 @@ import {
   useReactTable,
   type SortingState,
   getSortedRowModel,
+  TableMeta,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -47,6 +48,10 @@ import TableAppFilter, {
 } from "@/shared/components/table-app/filters/table-app-filters";
 import { ISortOptions, ResponseApi } from "arc/shared";
 import { handleResponse } from "@/shared/utils/response";
+
+export interface TableMetaInternal {
+  onRefetch?: () => void;
+}
 
 type FilterItem = { key: string; value: string };
 
@@ -152,6 +157,9 @@ export function TableApp<TData, TValue>({
       pagination,
       sorting,
     },
+    meta: {
+      onRefetch: fetchData,
+    } as TableMeta<TableMetaInternal>,
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
     manualPagination: true,
